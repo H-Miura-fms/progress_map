@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_picker/flutter_picker.dart';
+import 'package:material_symbols_icons/symbols.dart';
 // ignore: unused_import
 import 'dart:math' as math;
 
@@ -100,13 +102,34 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             TextButton(
-              onPressed: () {
-                setState(
-                  () {
-                    num += 1;
-                    prefs.setDouble('counter', num);
-                  },
-                );
+              onPressed: () async {
+                Picker(
+                    adapter: NumberPickerAdapter(data: [
+                      const NumberPickerColumn(
+                          begin: 0, end: 999, suffix: Text("h")),
+                      const NumberPickerColumn(
+                          begin: 0, end: 59, suffix: Text("min")),
+                    ]),
+                    delimiter: [
+                      PickerDelimiter(
+                          child: Container(
+                        width: 30.0,
+                        alignment: Alignment.center,
+                        child: const Icon(Symbols.go_to_line),
+                      ))
+                    ],
+                    hideHeader: true,
+                    title: const Text("Please Select"),
+                    onConfirm: (Picker picker, List<int> value) {
+                      double selectedHour = value[0].toDouble();
+                      double selectedMin = (value[1].toDouble()) / 60;
+                      double selectedNum = selectedHour + selectedMin;
+
+                      setState(() {
+                        num += selectedNum;
+                        prefs.setDouble('counter', num);
+                      });
+                    }).showDialog(context);
               },
               child: const Text("test"),
             ),
