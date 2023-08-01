@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // double per = 1.3;
 
-  double target = 40;
+  double target = 100;
   late double num = 0;
   late String targetTitle = "";
   late SharedPreferences prefs;
@@ -127,7 +127,11 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(top: 30),
                 child: Text(
                   "${num.toStringAsFixed(2)}h / ${target}h",
-                  style: const TextStyle(fontSize: 20),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: (per >= 1)
+                          ? const Color.fromARGB(255, 255, 111, 0)
+                          : null),
                 ),
               ),
               TextButton(
@@ -160,7 +164,13 @@ class _HomePageState extends State<HomePage> {
                         });
                       }).showDialog(context);
                 },
-                child: const Text("test"),
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 7, 168, 255))),
+                child: const Text(
+                  "Entry",
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -171,7 +181,13 @@ class _HomePageState extends State<HomePage> {
                     },
                   );
                 },
-                child: const Text("reset"),
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 255, 28, 7))),
+                child: const Text(
+                  "reset",
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                ),
               )
             ],
           ),
