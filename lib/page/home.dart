@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   double target = 40;
   late double num = 0;
-  late String targetTitle = "no Title";
+  late String targetTitle = "";
   late SharedPreferences prefs;
 
   @override
