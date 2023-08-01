@@ -112,6 +112,9 @@ class _HomePageState extends State<HomePage> {
                             strokeWidth: 20,
                             backgroundColor:
                                 const Color.fromARGB(255, 200, 200, 200),
+                            color: (per >= 1)
+                                ? const Color.fromARGB(255, 255, 111, 0)
+                                : null,
                           ),
                         ),
                       ),
