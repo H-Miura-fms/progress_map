@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:progress_map/component/margin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,11 +16,20 @@ class _HomePageState extends State<HomePage> {
   // double per = 1.3;
 
   double target = 40;
-  double num = 0;
+  late double num = 0;
+  late SharedPreferences prefs;
 
   @override
   void initState() {
+    futureInit();
     super.initState();
+  }
+
+  Future<void> futureInit() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      num = prefs.getDouble("counter") ?? 0;
+    });
   }
 
   @override
@@ -94,6 +104,7 @@ class _HomePageState extends State<HomePage> {
                 setState(
                   () {
                     num += 1;
+                    prefs.setDouble('counter', num);
                   },
                 );
               },
@@ -104,6 +115,7 @@ class _HomePageState extends State<HomePage> {
                 setState(
                   () {
                     num = 0;
+                    prefs.setDouble('counter', 0);
                   },
                 );
               },
