@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   double target = 40;
   late double num = 0;
+  late String targetTitle = "no Title";
   late SharedPreferences prefs;
 
   @override
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       num = prefs.getDouble("counter") ?? 0;
+      targetTitle = prefs.getString("title") ?? "no Title";
     });
   }
 
@@ -52,11 +54,17 @@ class _HomePageState extends State<HomePage> {
                   child: TextField(
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20),
-                    controller: TextEditingController(text: "no title"),
+                    controller: TextEditingController(text: targetTitle),
                     decoration: const InputDecoration(
                       hintText: 'Enter a target!',
                     ),
                     focusNode: targetNode,
+                    onSubmitted: (_) {
+                      setState(() {
+                        targetTitle = (_ == "") ? "no Title" : _;
+                        prefs.setString("title", targetTitle);
+                      });
+                    },
                   ),
                   onFocusChange: (hasFocus) {
                     if (!hasFocus) {
